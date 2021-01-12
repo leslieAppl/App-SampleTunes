@@ -58,13 +58,61 @@
 			children = (
 				CE59A64925ADB6FF00CE5F1F /* AppDelegate.swift */,
 				CE59A64B25ADB6FF00CE5F1F /* SceneDelegate.swift */,
-				CE59A64D25ADB6FF00CE5F1F /* ViewController.swift */,
+				CE59A66525ADB81400CE5F1F /* View Controllers */,
+				CE59A66425ADB80B00CE5F1F /* Supporting Files */,
+				CE59A66325ADB80300CE5F1F /* Resources */,
+				CE59A66225ADB7FD00CE5F1F /* Networking */,
+				CE59A66125ADB7F100CE5F1F /* Model */,
+				CE59A66025ADB7E600CE5F1F /* Cells */,
+			);
+			path = SampleTunes;
+			sourceTree = "<group>";
+		};
+		CE59A66025ADB7E600CE5F1F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		CE59A66125ADB7F100CE5F1F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CE59A66225ADB7FD00CE5F1F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		CE59A66325ADB80300CE5F1F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				CE59A64F25ADB6FF00CE5F1F /* Main.storyboard */,
 				CE59A65225ADB70200CE5F1F /* Assets.xcassets */,
 				CE59A65425ADB70200CE5F1F /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		CE59A66425ADB80B00CE5F1F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				CE59A65725ADB70200CE5F1F /* Info.plist */,
 			);
-			path = SampleTunes;
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CE59A66525ADB81400CE5F1F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE59A64D25ADB6FF00CE5F1F /* ViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +337,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PDY29GF949;
 				INFOPLIST_FILE = SampleTunes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,7 +345,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.appl.leslie.SampleTunes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -308,6 +357,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PDY29GF949;
 				INFOPLIST_FILE = SampleTunes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +365,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gmail.appl.leslie.SampleTunes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
