@@ -11,13 +11,55 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    // MARK: - Constants
+    let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    
+    let downloadService = DownloadService()
+    let queryService = QueryService()
+    
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    // MARK: - Variable And Properties
+    var searchResults: [Track] = []
+    
+    lazy var tapRecognizer: UITapGestureRecognizer = {
+        var recognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        return recognizer
+    }()
+    
+    // MARK: - Internal Methods
+    @objc func dismissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+    
+    func localFilePath(for url: URL) -> URL {
+        return documentsPath.appendingPathComponent(url.lastPathComponent)
+    }
+    
+    func playDownload(_ track: Track) {
+        let playerViewController = AVPlayerViewController()
+        present(playerViewController, animated: true, completion: nil)
+        
+        let url = localFilePath(for: track.previewURL)
+        let player = AVPlayer(url: url)
+        playerViewController.player = player
+        player.play()
+    }
+    
+    func position(for bar: UIBarPosition) -> UIBarPosition {
+        return .topAttached
+    }
+    
+    func reload(_ row: Int) {
+        tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+    }
+    
+    // MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        tableView.tableFooterView = UIView()
     }
 
 }
