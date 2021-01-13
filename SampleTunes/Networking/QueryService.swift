@@ -21,6 +21,12 @@ class QueryService {
     typealias QueryResult = ([Track]?, String) -> Void
     
     // MARK: - Internal Methods
+    func getSearchResults(searchTerm: String, completion: @escaping QueryResult) {
+        
+        DispatchQueue.main.async {
+            completion(self.tracks, self.errorMessage)
+        }
+    }
     private func updateSearchResults(_ data: Data) {
         var response: JSONDictionary?
         tracks.removeAll()
