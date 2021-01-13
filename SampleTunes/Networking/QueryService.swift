@@ -11,8 +11,12 @@ import Foundation
 class QueryService {
     
     // MARK: - Constants
+    let defaultSession = URLSession(configuration: .default)
     
     // MARK: - Variables And Properties
+    /// The data task will be re-initialized each tiem the user enters a new search string.
+    var dataTask: URLSessionTask?
+    
     var errorMessage = ""
     var tracks: [Track] = []
     
@@ -23,9 +27,41 @@ class QueryService {
     // MARK: - Internal Methods
     func getSearchResults(searchTerm: String, completion: @escaping QueryResult) {
         
-        DispatchQueue.main.async {
-            completion(self.tracks, self.errorMessage)
+        dataTask?.cancel()
+        
+        if var urlComponents = URLComponents(string: "https://itunes.apple.com/search") {
+//            print(urlComponents)
+            urlComponents.query = "media=music&entity=song&term=\(searchTerm)"
+//            print(urlComponents)
+            guard let url = urlComponents.url else { return }
+//            print(url)
+            dataTask = defaultSession.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
+                
+                defer {
+                    self?.dataTask = nil
+//                    print("defer")
+                }
+                
+                if let error = error {
+                    self?.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
+                }
+                else if
+                    let data = data,
+                    let response = response as? HTTPURLResponse,
+                    response.statusCode == 200 {
+                    
+                    self?.updateSearchResults(data)
+                    
+                    DispatchQueue.main.async {
+                        completion(self?.tracks, self?.errorMessage ?? "")
+                    }
+                }
+            })
+            
         }
+        
+        dataTask?.resume()
+//        print("resume")
     }
     private func updateSearchResults(_ data: Data) {
         var response: JSONDictionary?
@@ -59,6 +95,7 @@ class QueryService {
                 errorMessage += "Problem parsing trackDictionary\n"
             }
         }
+        
     }
     
 }
