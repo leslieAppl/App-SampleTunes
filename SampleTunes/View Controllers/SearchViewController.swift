@@ -22,6 +22,14 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     // MARK: - Variable And Properties
+    /// The lazy var lets you delay the creation of the session until after you initialize the view controller.
+    /// Doong that allows you to pass 'self' as the delegate parameter to the session initializer.
+    lazy var downloadsSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        
+        return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+    }()
+    
     var searchResults: [Track] = []
     
     lazy var tapRecognizer: UITapGestureRecognizer = {
@@ -59,7 +67,10 @@ class SearchViewController: UIViewController {
     // MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.tableFooterView = UIView()
+        
+        downloadService.downloadsSession = downloadsSession
     }
 
 }
@@ -171,5 +182,11 @@ extension SearchViewController: TrackCellDelegate {
         }
     }
     
-    
+}
+
+extension SearchViewController: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        
+        print("Finished downloading to \(location).")
+    }
 }

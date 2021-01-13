@@ -13,6 +13,7 @@ import Foundation
 class DownloadService {
     
     // MARK: - Variables And Properties
+    var activeDownloads: [URL: Download] = [:]
     var downloadsSession: URLSession!
     
     // MARK: - Internal Methods
@@ -28,8 +29,14 @@ class DownloadService {
         
     }
 
+    // TODO: URLSession Download Task
     func startDownload(_ track: Track) {
-        
+        let download = Download(track: track)
+        download.task = downloadsSession.downloadTask(with: track.previewURL)
+        // Start the download task by calling resume() on it.
+        download.task?.resume()
+        download.isDownloading = true
+        activeDownloads[download.track.previewURL] = download
     }
 
 }
