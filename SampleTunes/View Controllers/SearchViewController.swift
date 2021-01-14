@@ -123,7 +123,7 @@ extension SearchViewController: UITableViewDataSource {
         
         let track = searchResults[indexPath.row]
         
-        cell.configure(track: track, downloaded: track.downloaded)
+        cell.configure(track: track, downloaded: track.downloaded, download: downloadService.activeDownloads[track.previewURL])
         
         return cell
     }

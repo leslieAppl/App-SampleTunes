@@ -63,12 +63,24 @@ class TrackCell: UITableViewCell {
     }
     
     // MARK: - Internal Methods
-    func configure(track: Track, downloaded: Bool) {
+    func configure(track: Track, downloaded: Bool, download: Download?) {
         titleLabel.text = track.name
         artistLabel.text = track.artist
         
+        // Show/hide download controls Pause/Resume, Cancel buttons, progress info.
+        var showDownloadControls = false
+
+        if let download = download {
+            showDownloadControls = true
+            let title = download.isDownloading ? "Pause" : "Resume"
+            pauseButton.setTitle(title, for: .normal)
+        }
+        
+        pauseButton.isHidden = !showDownloadControls
+        cancelButton.isHidden = !showDownloadControls
+        
         selectionStyle = downloaded ? UITableViewCell.SelectionStyle.gray : UITableViewCell.SelectionStyle.none
-        downloadButton.isHidden = downloaded
+        downloadButton.isHidden = downloaded || showDownloadControls
     }
 
 }
