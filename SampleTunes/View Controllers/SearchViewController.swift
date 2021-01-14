@@ -189,7 +189,7 @@ extension SearchViewController: URLSessionDownloadDelegate {
         
         print("Finished downloading to location: \(location).")
         guard let sourceURL = downloadTask.originalRequest?.url else { return }
-        print("sourceURL: \(sourceURL)")
+        print("sourceURL - original request: \(sourceURL)")
         
         let download = downloadService.activeDownloads[sourceURL]
         downloadService.activeDownloads[sourceURL] = nil
@@ -202,7 +202,7 @@ extension SearchViewController: URLSessionDownloadDelegate {
         
         do {
             try fileManager.copyItem(at: location, to: destinationURL)
-            print("Copy item at \(location) to \(destinationURL)")
+            print("Copy item at tmp: \(location) to Documents: \(destinationURL)")
             download?.track.downloaded = true
         } catch let error {
             print("Could not copy file to disk: \(error.localizedDescription)")
