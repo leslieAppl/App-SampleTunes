@@ -25,7 +25,7 @@ class SearchViewController: UIViewController {
     /// The lazy var lets you delay the creation of the session until after you initialize the view controller.
     /// Doong that allows you to pass 'self' as the delegate parameter to the session initializer.
     lazy var downloadsSession: URLSession = {
-        let configuration = URLSessionConfiguration.default
+        let configuration = URLSessionConfiguration.background(withIdentifier: "com.gmail.appl.leslie.SampleTunes")
         
         return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }()
@@ -184,6 +184,23 @@ extension SearchViewController: TrackCellDelegate {
     
 }
 
+// MARK: - URLSession Delegate
+extension SearchViewController: URLSessionDelegate {
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+               let completionHandler = appDelegate.backgroundSessionCompletionHandler {
+                
+                appDelegate.backgroundSessionCompletionHandler = nil
+                
+                completionHandler()
+            }
+        }
+    }
+}
+
+// MARK: - URLSession Download Delegate
 extension SearchViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
@@ -234,3 +251,4 @@ extension SearchViewController: URLSessionDownloadDelegate {
         }
     }
 }
+
